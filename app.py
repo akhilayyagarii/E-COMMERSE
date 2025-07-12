@@ -114,11 +114,13 @@ def products():
 
     products = list(products_col.find(query))
 
-    if len(products) == 1:
-        product = products[0]
-        return redirect(url_for('product_detail', category=product['category'], product_id=product['id']))
+    return render_template(
+        'products.html',
+        products=products,
+        category=category,
+        display_category=category.title() if category else "All"
+    )
 
-    return render_template('products.html', products=products, category=category, display_category=category.title() if category else "All")
 
 # PRODUCT DETAIL
 @app.route('/product/<category>/<product_id>', methods=['GET'])
